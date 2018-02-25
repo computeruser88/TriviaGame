@@ -26,6 +26,12 @@ h1 {
     padding: 0;
     margin: 0;
 }
+#timer  {
+    text-align: center;
+    padding: 10% auto;
+    font-size: 24px;
+    color: #ffff00;
+}
 #start {
     position: relative;
     left: 33%;
@@ -38,7 +44,9 @@ h1 {
     color: #ffffff;
 }
 #answer0, #answer1, #answer2, #answer3{
+    text-align: center;
     transition-duration: 0.4s;
+    margin: 10px 0;
     color: #ffffff;
     font-size: 24px;
 }

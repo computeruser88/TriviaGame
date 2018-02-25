@@ -28,7 +28,57 @@ var currentQuestion;
 var randomNumber;
 var isQuestionAnswered = false;
 var questionNumber = 0;
+var answerSubmitted;
+var counter;
 
+var timer = {
+    time: 30,
+    reset: function () {
+        this.time = 30;
+        $("#timer").html(this.time + " seconds left");
+    },
+    start: function () {
+        counter = setInterval(timer.count, 1000);
+    },
+    stop: function () {
+        clearInterval(counter);
+        $("#timer").html("");
+    },
+    count: function () {
+        timer.time--;
+        $("#timer").html(timer.time + " seconds left");
+        if (timer.time < 6 && timer.time >= 0) {
+            $("#timer").html(timer.time + " seconds left");
+            $("#timer").css("color", "#ff0000");
+        }
+        if (timer.time >= 0) {
+            $("#timer").html(timer.time + " seconds left");
+        } else {
+            timer.reset;
+            questionNumber++;
+            alert("Sorry, you ran out of time.");
+            unansweredQuestions++;
+            if (questionNumber === questionsPresented.length) {
+                timer.stop;
+                ("#timer").html("");
+                alert("You got " + correctAnswers + "correct");
+                alert("You got " + wrongAnswers + " wrong.");
+                alert("You did not answer " + unansweredQuestions + "questions.");
+                $("#start").show();
+                $("#question").html("");
+                $("#answer0").html("");
+                $("#answer1").html("");
+                $("#answer2").html("");
+                $("#answer3").html("");
+                initialize();
+            } else {
+                updateQuestion(questionsPresented[questionNumber]);
+                timer.reset;
+                timer.start;
+            }
+        }
+    }
+}
 function updateQuestion(randomNumber) {
     currentQuestion = questions[randomNumber][0];
     answer[0] = questions[randomNumber][1];
@@ -41,10 +91,10 @@ function updateQuestion(randomNumber) {
     console.log("answer[2]: " + answer[2]);
     console.log("answer[3]: " + answer[3]);
     $("#question").text(currentQuestion);
-    $("#answer").html('<p id="answer0">' + answer[0] + "</p>");
-    $("#answer").append('<p id="answer1">' + answer[1] + "</p>");
-    $("#answer").append('<p id="answer2">' + answer[2] + "</p>");
-    $("#answer").append('<p id="answer3">' + answer[3] + "</p>");
+    $("#answer0").html(answer[0]);
+    $("#answer1").html(answer[1]);
+    $("#answer2").html(answer[2]);
+    $("#answer3").html(answer[3]);
 }
 function initializeQuestions() {
     questionsPresented = [];
@@ -60,59 +110,67 @@ function initializeQuestions() {
     return questionsPresented;
 }
 
-$("#start").on("click", function () {
-    $("#button").empty();
-    questionsPresented = initializeQuestions();
+function initialize() {
     questionNumber = 0;
-    updateQuestion(questionsPresented[questionNumber]);
-    for (var i = 0; i < questionsPresented.length; i++) {
-        correctIndex[i] = questions[questionsPresented[i]][5];
+    $("#start").on("click", function () {
+        $(this).hide();
+        questionNumber = 0;
+        questionsPresented = initializeQuestions();
+        for (var i = 0; i < questionsPresented.length; i++) {
+            correctIndex[i] = questions[questionsPresented[i]][5];
+        }
+        timer.start();
+        updateQuestion(questionsPresented[questionNumber]);
+    });
+}
+
+initialize();
+
+$(".answer").on("click", function () {
+    if (this.id === "answer0") {
+        answerSubmitted = 0;
+    } else if (this.id === "answer1") {
+        answerSubmitted = 1;
+    } else if (this.id === "answer2") {
+        answerSubmitted = 2;
+    } else if (this.id === "answer3") {
+        answerSubmitted = 3;
     }
-    $("#answer0").on("click", function () {
-        if (correctIndex[questionNumber] === 0) {
-            $("#answer").html("<br>Correct! The answer is " + answer[0].toLowerCase() + "!");
-        } else {
-            $("#answer").html("<br>Wrong! The answer is not " + answer[0].toLowerCase() + "!");
-        }
-        isQuestionAnswered = true;
-        questionNumber++;
-        console.log("question number: " + questionNumber);
-    });
-    $("#answer1").on("click", function () {
-        if (correctIndex[questionNumber] === 1) {
-            $("#answer").html("<br>Correct! The answer is " + answer[1].toLowerCase() + "!");
-        } else {
-            $("#answer").html("<br>Wrong! The answer is not " + answer[1].toLowerCase() + "!");
-        }
-        isQuestionAnswered = true;
-        questionNumber++;
-        console.log("question number: " + questionNumber);
-    });
-    $("#answer2").on("click", function () {
-        if (correctIndex[questionNumber] === 2) {
-            $("#answer").html("<br>Correct! The answer is " + answer[2].toLowerCase() + "!");
-        } else {
-            $("#answer").html("<br>Wrong! The answer is not " + answer[2].toLowerCase() + "!");
-        }
-        isQuestionAnswered = true;
-        questionNumber++;
-        console.log("question number: " + questionNumber);
-    });
-    $("#answer3").on("click", function () {
-        if (correctIndex[questionNumber] === 3) {
-            $("#answer").html("<br>Correct! The answer is " + answer[3].toLowerCase() + "!");
-        } else {
-            $("#answer").html("<br>Wrong! The answer is not " + answer[3].toLowerCase() + "!");
-        }
-        isQuestionAnswered = true;
-        questionNumber++;
-    });
-    if (questionNumber === questionsPresented.length) {
-        $("#question").html("<h2>You got " + correctAnswers + "correct.</h2>");
-        $("#answer").html("<h2>You got " + wrongAnswers + " wrong.<br>You did not answer " + unansweredQuestions + "questions.</h2>");
-        $("#question").empty();
-        $("#answer").empty();
-        $("#button").html('<button id="start">Start</button>');
+    if (answerSubmitted === 0 && correctIndex[questionNumber] === 0) {
+        alert("Correct!");
+    } else if (answerSubmitted === 1 && correctIndex[questionNumber] === 1) {
+        alert("Correct!");
+    } else if (answerSubmitted === 2 && correctIndex[questionNumber] === 2) {
+        alert("Correct!");
+    } else if (answerSubmitted === 3 && correctIndex[questionNumber] === 3) {
+        alert("Correct!");
+    } else {
+        alert("Wrong!");
+    }
+    $("#question").html("");
+    $("#answer0").html("");
+    $("#answer1").html("");
+    $("#answer2").html("");
+    $("#answer3").html("");
+    questionNumber++;
+    if (questionNumber < questionsPresented.length) {
+        updateQuestion(questionsPresented[questionNumber]);
+        timer.reset;
+        timer.start;
+    } else {
+        alert("You got " + correctAnswers + " correct.");
+        alert("You got " + wrongAnswers + " wrong.");
+        alert("You did not answer " + unansweredQuestions + " questions.");
+        $("#start").show();
+        $("#question").html("");
+        $("#answer0").html("");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
+        timer.stop;
+        $("#start").show();
+        initialize();
     }
 });
+
 
