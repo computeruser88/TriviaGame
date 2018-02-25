@@ -24,7 +24,6 @@ var correctAnswers = 0;
 var wrongAnswers = 0;
 var answer = [];
 var correctIndex;
-var answerId = [];
 var currentQuestion;
 var randomNumber;
 var isQuestionAnswered = false;
@@ -43,10 +42,10 @@ function updateQuestion(randomNumber) {
     console.log("answer[2]: " + answer[2]);
     console.log("answer[3]: " + answer[3]);
     $("#question").text(currentQuestion);
-    $("#answer").html('<p id="answerId[0]">' + answer[0] + "</p>");
-    $("#answer").append('<p id="answerId[1]">' + answer[1] + "</p>");
-    $("#answer").append('<p id="answerId[2]">' + answer[2] + "</p>");
-    $("#answer").append('<p id="answerId[3]">' + answer[3] + "</p>");
+    $("#answer").html('<p id="answer0">' + answer[0] + "</p>");
+    $("#answer").append('<p id="answer1">' + answer[1] + "</p>");
+    $("#answer").append('<p id="answer2">' + answer[2] + "</p>");
+    $("#answer").append('<p id="answer3">' + answer[3] + "</p>");
 }
 function initializeQuestions() {
     questionsPresented = [];
@@ -68,49 +67,43 @@ $("#start").on("click", function () {
     questionNumber = 0;
     updateQuestion(questionsPresented[questionNumber]);
     correctIndex = questions[questionsPresented[questionNumber]][5];
-    $("#answerId[0]").on("click", function () {
-        if (questionNumber < questionsPresented.length) {
-            if (correctIndex === 0) {
-                $("#answer").html("<br>Correct! The answer is " + answer[0].toLowerCase() + "!");
-            } else {
-                $("#answer").html("<br>Wrong! The answer is not " + answer[0].toLowerCase() + "!");
-            }
-            isQuestionAnswered = true;
-            questionNumber++;
+    $("#answer0").on("click", function () {
+        if (correctIndex === 0) {
+            $("#answer").html("<br>Correct! The answer is " + answer[0].toLowerCase() + "!");
+        } else {
+            $("#answer").html("<br>Wrong! The answer is not " + answer[0].toLowerCase() + "!");
         }
+        isQuestionAnswered = true;
+        questionNumber++;
+        console.log("question number: " + questionNumber);
     });
-    $("#answerId[1]").on("click", function () {
-        if (questionNumber < questionsPresented.length) {
-            if (correctIndex === 1) {
-                $("#answer").html("<br>Correct! The answer is " + answer[1].toLowerCase() + "!");
-            } else {
-                $("#answer").html("<br>Wrong! The answer is not " + answer[1].toLowerCase() + "!");
-            }
-            isQuestionAnswered = true;
-            questionNumber++;
+    $("#answer1").on("click", function () {
+        if (correctIndex === 1) {
+            $("#answer").html("<br>Correct! The answer is " + answer[1].toLowerCase() + "!");
+        } else {
+            $("#answer").html("<br>Wrong! The answer is not " + answer[1].toLowerCase() + "!");
         }
+        isQuestionAnswered = true;
+        questionNumber++;
+        console.log("question number: " + questionNumber);
     });
-    $("#answerId[2]").on("click", function () {
-        if (questionNumber < questionsPresented.length) {
-            if (correctIndex === 2) {
-                $("#answer").html("<br>Correct! The answer is " + answer[2].toLowerCase() + "!");
-            } else {
-                $("#answer").html("<br>Wrong! The answer is not " + answer[2].toLowerCase() + "!");
-            }
-            isQuestionAnswered = true;
-            questionNumber++;
+    $("#answer2").on("click", function () {
+        if (correctIndex === 2) {
+            $("#answer").html("<br>Correct! The answer is " + answer[2].toLowerCase() + "!");
+        } else {
+            $("#answer").html("<br>Wrong! The answer is not " + answer[2].toLowerCase() + "!");
         }
+        isQuestionAnswered = true;
+        questionNumber++;
+        console.log("question number: " + questionNumber);
     });
-    $("#answerId[3]").on("click", function () {
-        if (questionNumber < questionsPresented.length) {
-            if (correctIndex === 3) {
-                $("#answer").html("<br>Correct! The answer is " + answer[3].toLowerCase() + "!");
-            } else {
-                $("#answer").html("<br>Wrong! The answer is not " + answer[3].toLowerCase() + "!");
-            }
-            isQuestionAnswered = true;
-            questionNumber++;
+    $("#answer3").on("click", function () {
+        if (correctIndex === 3) {
+            $("#answer").html("<br>Correct! The answer is " + answer[3].toLowerCase() + "!");
+        } else {
+            $("#answer").html("<br>Wrong! The answer is not " + answer[3].toLowerCase() + "!");
         }
+        isQuestionAnswered = true;
     });
     if (questionNumber === questionsPresented.length) {
         $("#question").html("<h2>You got " + correctAnswers + "correct.</h2>");
@@ -119,5 +112,5 @@ $("#start").on("click", function () {
         $("#answer").empty();
         $("#button").html('<button id="start">Start</button>');
     }
-}); 
+});
 

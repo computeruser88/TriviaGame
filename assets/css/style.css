@@ -17,7 +17,7 @@ h1 {
 #question {  
     text-align: center;
     font-size: 24px;
-    color: #ffffff;
+    color: #ffff00;
     padding: 0;
 }
 #answer {
@@ -37,10 +37,11 @@ h1 {
     background: #0000ff;
     color: #ffffff;
 }
-#answerId[0], #answerId[1], #answerId[2], #answerId[3]{
+#answer0, #answer1, #answer2, #answer3{
     transition-duration: 0.4s;
+    color: #ffffff;
     font-size: 24px;
 }
-#answerId[0]:hover, #answerId[1]:hover, #answerId[2]:hover, #answerId[3]:hover {
+#answer0:hover, #answer1:hover, #answer2:hover, #answer3:hover {
     color: #ffff00;
 }
