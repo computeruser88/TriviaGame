@@ -28,7 +28,7 @@ h1 {
 #start {
     position: relative;
     left: 33%;
-    top: 50%;
+    margin: 5% auto;
     width: 33%;
     height: 80px;
     font-family: 'Play', sans-serif;
