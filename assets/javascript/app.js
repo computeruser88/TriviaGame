@@ -67,7 +67,7 @@ $("#start").on("click", function () {
     questionNumber = 0;
     updateQuestion(questionsPresented[questionNumber]);
     for (var i = 0; i < questionsPresented.length; i++) {
-        correctIndex.push(questions[questionsPresented[i]][5]);
+        correctIndex[i] = questions[questionsPresented[i]][5];
     }
     $("#answer0").on("click", function () {
         if (correctIndex[questionNumber] === 0) {
