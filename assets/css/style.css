@@ -1,7 +1,7 @@
 body {
     font-family: 'Play', sans-serif;
     background: url("../images/anatomy-high-tech.jpg");
-    color: #9999ff;
+    color: #ffffff;
 }
 h1 {
     font-size: 72px;
@@ -12,11 +12,12 @@ h1 {
     margin: auto;
     height: 600px;
     width: 1200px;
-    background-color: #0000ff;
+    background-color: #4444ff;
 }
 #question {  
     text-align: center;
     font-size: 24px;
+    color: #ffffff;
     padding: 0;
 }
 #answer {
@@ -33,13 +34,13 @@ h1 {
     height: 80px;
     font-family: 'Play', sans-serif;
     font-size: 28px;
-    background: #9999ff;
-    color: #0000ff;
+    background: #0000ff;
+    color: #ffffff;
 }
-#A,#B,#C,#D{
+#answerId[0], #answerId[1], #answerId[2], #answerId[3]{
     transition-duration: 0.4s;
     font-size: 24px;
 }
-#A:hover,  #B:hover,  #C:hover, #D:hover  {
-    font-size: 25px;
+#answerId[0]:hover, #answerId[1]:hover, #answerId[2]:hover, #answerId[3]:hover {
+    color: #ffff00;
 }

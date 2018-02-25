@@ -1,95 +1,123 @@
 
 var questions = [
-    ["What is the large group of leg muscles that helps with knee extension?", "Quadratus lumborum", "Gastrocnemius", "Quadriceps", "Transverse abdominis", "C"],
-    ["What is the physiological mechanism through which fat loss happens?", "Perspiration", "Muscle contraction", "Digestion", "Respiration", "D"],
-    ["What is the largest muscle in the calf area?", "Gastrocnemius", "Soleus", "Iliotibial band", "Hamstring", "A"],
-    ["Which of the following is not a deltoid?", "Anterior", "Transverse", "Posterior", "Medial", "B"],
-    ["Which system is the group of glands that secretes hormones?", "Endocrine", "Cardiovascular", "Nervous", "Digestive", "A"],
-    ["Which muscle is not involved with elbow flexion?", "Biceps brachii", "Brachioradialis", "Biceps femoris", "Brachialis", "C"],
-    ["Which system do the spinal erectors belong to?", "Skeletal", "Muscular", "Nervous", "Integumentary", "B"],
-    ["Which muscle is responsible for keeping the arm attached to the trunk of the body?", "Pectoralis Minor", "Biceps brachii", "Pectoralis Major", "Rectus abdominis", "C"],
-    ["Which is not a section of the spine?", "Cervical", "Lumbar", "Thoracic", "Sagittal", "D"],
-    ["Which of the following is considered a macronutrient?", "Potassium", "Carbohydrate", "Calcium", "Folate", "B"],
-    ["Which is not a monosaccharide?", "Glucose", "Galactose", "Lactose", "Fructose", "C"],
-    ["What is the immediate reserve of glucose for muscle cells called?", "Glycogen", "Glucagon", "Galactose", "ATP", "A"],
-    ["Which is considered the main anabolic hormone of the human body?", "Glucagon", "Insulin", "Estrogen", "Adrenaline", "B"],
-    ["Which is not a kind of muscle contraction?", "Isometric", "Concentric", "Eccentric", "Limbic", "D"],
-    ["What is not part of a carbohydrate molecule?", "Nitrogen", "Carbon", "Hydrogen", "Oxygen", "A"],
-    ["Where are femurs located?", "Upper arms", "Lower legs", "Torso", "Thighs", "D"]
+    ["What is the large group of leg muscles that helps with knee extension?", "Quadratus lumborum", "Gastrocnemius", "Quadriceps", "Transverse abdominis", 2],
+    ["What is the physiological mechanism through which fat loss happens?", "Perspiration", "Muscle contraction", "Digestion", "Respiration", 3],
+    ["What is the largest muscle in the calf area?", "Gastrocnemius", "Soleus", "Iliotibial band", "Hamstring", 0],
+    ["Which of the following is not a deltoid?", "Anterior", "Transverse", "Posterior", "Medial", 1],
+    ["Which system is the group of glands that secretes hormones?", "Endocrine", "Cardiovascular", "Nervous", "Digestive", 0],
+    ["Which muscle is not involved with elbow flexion?", "Biceps brachii", "Brachioradialis", "Biceps femoris", "Brachialis", 2],
+    ["Which system do the spinal erectors belong to?", "Skeletal", "Muscular", "Nervous", "Integumentary", 1],
+    ["Which muscle is responsible for keeping the arm attached to the trunk of the body?", "Pectoralis Minor", "Biceps brachii", "Pectoralis Major", "Rectus abdominis", 2],
+    ["Which is not a section of the spine?", "Cervical", "Lumbar", "Thoracic", "Sagittal", 3],
+    ["Which of the following is considered a macronutrient?", "Potassium", "Carbohydrate", "Calcium", "Folate", 1],
+    ["Which is not a monosaccharide?", "Glucose", "Galactose", "Lactose", "Fructose", 2],
+    ["What is the immediate reserve of glucose for muscle cells called?", "Glycogen", "Glucagon", "Galactose", "ATP", 0],
+    ["Which is considered the main anabolic hormone of the human body?", "Glucagon", "Insulin", "Estrogen", "Adrenaline", 1],
+    ["Which is not a kind of muscle contraction?", "Isometric", "Concentric", "Eccentric", "Limbic", 3],
+    ["What is not part of a carbohydrate molecule?", "Nitrogen", "Carbon", "Hydrogen", "Oxygen", 0],
+    ["Where are femurs located?", "Upper arms", "Lower legs", "Torso", "Thighs", 3]
 ]
 
+var unansweredQuestions = 0;
+var questionsPresented = []; // ensures 5 unique questions per game
+var correctAnswers = 0;
+var wrongAnswers = 0;
+var answer = [];
+var correctIndex;
+var answerId = [];
+var currentQuestion;
+var randomNumber;
+var isQuestionAnswered = false;
+var questionNumber = 0;
 
-$("#start").on("click", function () {
-    $("#button").empty();
-
-
-    var unansweredQuestions = 0;
-    var questionsPresented = []; // ensures 5 unique questions per game
-    var correctAnswers = 0;
-    var wrongAnswers = 0;
+function updateQuestion(randomNumber) {
+    currentQuestion = questions[randomNumber][0];
+    answer[0] = questions[randomNumber][1];
+    answer[1] = questions[randomNumber][2];
+    answer[2] = questions[randomNumber][3];
+    answer[3] = questions[randomNumber][4];
+    correctIndex = questions[randomNumber][5];
+    console.log("currentQuestion: " + currentQuestion);
+    console.log("answer[0]: " + answer[0]);
+    console.log("answer[1]: " + answer[1]);
+    console.log("answer[2]: " + answer[2]);
+    console.log("answer[3]: " + answer[3]);
+    $("#question").text(currentQuestion);
+    $("#answer").html('<p id="answerId[0]">' + answer[0] + "</p>");
+    $("#answer").append('<p id="answerId[1]">' + answer[1] + "</p>");
+    $("#answer").append('<p id="answerId[2]">' + answer[2] + "</p>");
+    $("#answer").append('<p id="answerId[3]">' + answer[3] + "</p>");
+}
+function initializeQuestions() {
+    questionsPresented = [];
     for (var i = 0; i < 5; i++) {
-        var randomNumber = Math.floor(Math.random() * questions.length);
-        var isQuestionAnswered = false;
+        randomNumber = Math.floor(Math.random() * questions.length);
+        isQuestionAnswered = false;
         if (randomNumber in questionsPresented) {
             i--;
         } else {
             questionsPresented.push(randomNumber);
-        var currentQuestion = questions[randomNumber][0];
-        var answerA = questions[randomNumber][1];
-        var answerB = questions[randomNumber][2];
-        var answerC = questions[randomNumber][3];
-        var answerD = questions[randomNumber][4];
-        var correctLetter = questions[randomNumber][5];
-        $("#question").text(currentQuestion);
-        $("#answer").html('<p id="A">' + answerA + "</p>");
-        $("#answer").append('<p id="B">' + answerB + "</p>");
-        $("#answer").append('<p id="C">' + answerC + "</p>");
-        $("#answer").append('<p id="D">' + answerD + "</p>");
-        $("#A").on("click", function () {
-            isQuestionAnswered = true;
-            if (correctLetter === "A") {
-                $("#answer").html("Correct! The answer is " + answerA + "!");
-                correctAnswers++;
-            } else {
-                $("#answer").html("Wrong! The answer is not " + answerA + "!");
-                wrongAnswers++;
-            }
-        });
-        $("#B").on("click", function () {
-            isQuestionAnswered = true;
-            if (correctLetter === "B") {
-                $("#answer").html("Correct! The answer is " + answerB + "!");
-                correctAnswers++;
-            } else {
-                $("#answer").html("Wrong! The answer is not " + answerB + "!");
-                wrongAnswers++;
-            }
-        });
-        $("#C").on("click", function () {
-            isQuestionAnswered = true;
-            if (correctLetter === "C") {
-                $("#answer").html("Correct! The answer is " + answerC + "!");
-                correctAnswers++;
-            } else {
-                $("#answer").html("Wrong! The answer is not " + answerC + "!");
-                wrongAnswers++;
-            }
-        });
-        $("#D").on("click", function () {
-            isQuestionAnswered = true;
-            if (correctLetter === "D") {
-                $("#answer").html("Correct! The answer is " + answerD + "!");
-                correctAnswers++;
-            } else {
-                $("#answer").html("Wrong! The answer is not " + answerD + "!");
-                wrongAnswers++;
-            }
-        });
         }
     }
-    $("#question").html("<h2>You got " + correctAnswers + "correct.</h2>");
-    $("#answer").html("<h2>You got " + wrongAnswers + " wrong.<br>You did not answer " + unansweredQuestions + "questions.</h2>");
-    $("#question").empty();
-    $("#answer").empty();
-    $("#button").html('<button id="start">Start</button>');
-});
+    return questionsPresented;
+}
+
+$("#start").on("click", function () {
+    $("#button").empty();
+    questionsPresented = initializeQuestions();
+    questionNumber = 0;
+    updateQuestion(questionsPresented[questionNumber]);
+    correctIndex = questions[questionsPresented[questionNumber]][5];
+    $("#answerId[0]").on("click", function () {
+        if (questionNumber < questionsPresented.length) {
+            if (correctIndex === 0) {
+                $("#answer").html("<br>Correct! The answer is " + answer[0].toLowerCase() + "!");
+            } else {
+                $("#answer").html("<br>Wrong! The answer is not " + answer[0].toLowerCase() + "!");
+            }
+            isQuestionAnswered = true;
+            questionNumber++;
+        }
+    });
+    $("#answerId[1]").on("click", function () {
+        if (questionNumber < questionsPresented.length) {
+            if (correctIndex === 1) {
+                $("#answer").html("<br>Correct! The answer is " + answer[1].toLowerCase() + "!");
+            } else {
+                $("#answer").html("<br>Wrong! The answer is not " + answer[1].toLowerCase() + "!");
+            }
+            isQuestionAnswered = true;
+            questionNumber++;
+        }
+    });
+    $("#answerId[2]").on("click", function () {
+        if (questionNumber < questionsPresented.length) {
+            if (correctIndex === 2) {
+                $("#answer").html("<br>Correct! The answer is " + answer[2].toLowerCase() + "!");
+            } else {
+                $("#answer").html("<br>Wrong! The answer is not " + answer[2].toLowerCase() + "!");
+            }
+            isQuestionAnswered = true;
+            questionNumber++;
+        }
+    });
+    $("#answerId[3]").on("click", function () {
+        if (questionNumber < questionsPresented.length) {
+            if (correctIndex === 3) {
+                $("#answer").html("<br>Correct! The answer is " + answer[3].toLowerCase() + "!");
+            } else {
+                $("#answer").html("<br>Wrong! The answer is not " + answer[3].toLowerCase() + "!");
+            }
+            isQuestionAnswered = true;
+            questionNumber++;
+        }
+    });
+    if (questionNumber === questionsPresented.length) {
+        $("#question").html("<h2>You got " + correctAnswers + "correct.</h2>");
+        $("#answer").html("<h2>You got " + wrongAnswers + " wrong.<br>You did not answer " + unansweredQuestions + "questions.</h2>");
+        $("#question").empty();
+        $("#answer").empty();
+        $("#button").html('<button id="start">Start</button>');
+    }
+}); 
+
