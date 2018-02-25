@@ -11,7 +11,7 @@ var questions = [
     ["Which is not a section of the spine?", "Cervical", "Lumbar", "Thoracic", "Sagittal", 3],
     ["Which of the following is considered a macronutrient?", "Potassium", "Carbohydrate", "Calcium", "Folate", 1],
     ["Which is not a monosaccharide?", "Glucose", "Galactose", "Lactose", "Fructose", 2],
-    ["What is the immediate reserve of glucose for muscle cells called?", "Glycogen", "Glucagon", "Galactose", "ATP", 0],
+    ["What is the immediate reserve of glucose for muscle cells called?", "Glycogen", "Glucagon", "Galactose", "Maltose", 0],
     ["Which is considered the main anabolic hormone of the human body?", "Glucagon", "Insulin", "Estrogen", "Adrenaline", 1],
     ["Which is not a kind of muscle contraction?", "Isometric", "Concentric", "Eccentric", "Limbic", 3],
     ["What is not part of a carbohydrate molecule?", "Nitrogen", "Carbon", "Hydrogen", "Oxygen", 0],
