@@ -1,0 +1,45 @@
+body {
+    font-family: 'Play', sans-serif;
+    background: url("../images/anatomy-high-tech.jpg");
+    color: #9999ff;
+}
+h1 {
+    font-size: 72px;
+    padding-top: 10%;
+    text-align: center;
+}
+#game {
+    margin: auto;
+    height: 600px;
+    width: 1200px;
+    background-color: #0000ff;
+}
+#question {  
+    text-align: center;
+    font-size: 24px;
+    padding: 0;
+}
+#answer {
+    text-align: center;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+}
+#start {
+    position: relative;
+    left: 33%;
+    top: 50%;
+    width: 33%;
+    height: 80px;
+    font-family: 'Play', sans-serif;
+    font-size: 28px;
+    background: #9999ff;
+    color: #0000ff;
+}
+#A,#B,#C,#D{
+    transition-duration: 0.4s;
+    font-size: 24px;
+}
+#A:hover,  #B:hover,  #C:hover, #D:hover  {
+    font-size: 25px;
+}
