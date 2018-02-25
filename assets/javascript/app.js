@@ -35,7 +35,6 @@ function updateQuestion(randomNumber) {
     answer[1] = questions[randomNumber][2];
     answer[2] = questions[randomNumber][3];
     answer[3] = questions[randomNumber][4];
-    correctIndex = questions[randomNumber][5];
     console.log("currentQuestion: " + currentQuestion);
     console.log("answer[0]: " + answer[0]);
     console.log("answer[1]: " + answer[1]);
