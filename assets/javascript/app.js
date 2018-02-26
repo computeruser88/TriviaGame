@@ -28,34 +28,34 @@ var randomNumber;
 var isQuestionAnswered = false;
 var questionNumber = 0;
 var answerSubmitted;
-var counter;
+var intervalId;
 
 var timer = {
     time: 20,
     start: function () {
-        counter = setInterval(timer.count, 1000);
+        intervalId = setInterval(this.count, 1000);
     },
     stop: function () {
-        clearInterval(counter);
+        clearInterval(intervalId);
         $("#timer").html("");
     },
     reset: function () {
-        timer.time = 20;
+        this.time = 20;
     },
     count: function () {
-        timer.time--;
-        console.log("timer.time: " + timer.time);
+        this.time--;
+        console.log("this.time: " + this.time);
         if (timer.time < 6) {
             $("#timer").css("color", "#ff0000");
         } else {
             $("#timer").css("color", "#ffff00");
         }
-        if (timer.time >= 0) {
-            $("#timer").html(timer.time + " seconds left");
+        if (this.time >= 0) {
+            $("#timer").html(this.time + " seconds left");
         } else {
             questionNumber++;
-            timer.reset;
             alert("Sorry, you ran out of time.");
+            this.reset;
             unansweredQuestions++;
             if (questionNumber === questionsPresented.length) {
                 displayTotals();
@@ -123,6 +123,7 @@ function initialize() {
             correctIndex[i] = questions[questionsPresented[i]][5];
         }
         updateQuestion(questionsPresented[questionNumber]);
+        $("#timer").html("20 seconds left");
         timer.reset;
         timer.start;
     });
