@@ -1,5 +1,6 @@
+
 var questions = [
-    ["What is the large group of leg muscles that helps with knee extension?", "Quadratus lumborum", "Gastrocnemius", "Quadriceps", "Transverse abdominis", 2],
+    ["What is the large group of upper leg muscles that helps with knee extension?", "Quadratus lumborum", "Gastrocnemius", "Quadriceps", "Transverse abdominis", 2],
     ["What is the physiological mechanism through which fat loss happens?", "Perspiration", "Muscle contraction", "Digestion", "Respiration", 3],
     ["What is the largest muscle in the calf area?", "Gastrocnemius", "Soleus", "Iliotibial band", "Hamstring", 0],
     ["Which of the following is not a deltoid?", "Anterior", "Transverse", "Posterior", "Medial", 1],
@@ -25,70 +26,90 @@ var answer = [];
 var correctIndex = [];
 var currentQuestion;
 var randomNumber;
-var isQuestionAnswered = false;
 var questionNumber = 0;
 var answerSubmitted;
 var intervalId;
+var displaySeconds;
+var timerRunning = false;
 
-var timer = {
-    time: 20,
+var questionTimer = {
+    time: 15,
     start: function () {
-        intervalId = setInterval(this.count, 1000);
+        // if (timerRunning === false) {
+            // timerRunning = true;
+            intervalId = setInterval(questionTimer.count, 1000);
+            console.log(intervalId);
+        // }
     },
     stop: function () {
         clearInterval(intervalId);
-        $("#timer").html("");
+        timerRunning = false;
     },
     reset: function () {
-        this.time = 20;
+        this.time = 15;
+        $(".timer").html("0:" + this.time);
     },
     count: function () {
-        this.time--;
-        console.log("this.time: " + this.time);
-        if (timer.time < 6) {
-            $("#timer").css("color", "#ff0000");
+        questionTimer.time--;
+        if (questionTimer.time < 10) {
+            displaySeconds = "0" + questionTimer.time;
         } else {
-            $("#timer").css("color", "#ffff00");
+            displaySeconds = questionTimer.time;
         }
-        if (this.time >= 0) {
-            $("#timer").html(this.time + " seconds left");
+        if (questionTimer.time >= 0) {
+            $("#timer").html("0:" + displaySeconds);
+            console.log("displaySeconds: " + displaySeconds);
         } else {
             questionNumber++;
-            alert("Sorry, you ran out of time.");
-            this.reset;
+            $("#question").html("");
+            $("#answer0").html("You ran out of time.");
+            $("#answer1").html("");
+            $("#answer2").html("");
+            $("#answer3").html("");
             unansweredQuestions++;
-            if (questionNumber === questionsPresented.length) {
-                displayTotals();
-                initialize();
-            } else if (questionNumber < questionsPresented.length) {
-                updateQuestion(questionsPresented[questionNumber]);
+            if (questionNumber < questionsPresented.length) {
+                setTimeout(function () {
+                    updateQuestion(questionsPresented[questionNumber]);
+                }, 3000);
+            } else {
+                setTimeout(function () {
+                    displayTotals();
+                    initialize();
+                }, 3000);
             }
         }
-    },
+    }
 };
+
 function displayTotals() {
-    timer.stop;
-    alert("You got " + correctAnswers + " correct.");
-    alert("You got " + wrongAnswers + " wrong.");
-    alert("You did not answer " + unansweredQuestions + " questions.");
-    $("#start").show();
-    $("#question").html("");
-    $("#answer0").html("");
-    $("#answer1").html("");
-    $("#answer2").html("");
-    $("#answer3").html("");
+    questionTimer.stop;
+    $(".timer").hide();
+    $("#answer0").html("You got " + correctAnswers + " correct.");
+    $("#answer1").html("You got " + wrongAnswers + " wrong.");
+    $("#answer2").html("You did not answer " + unansweredQuestions + " questions.");
+    setTimeout(function () {
+        $("#start").show();
+        $("#question").html("");
+        $("#answer0").html("");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
+    }, 6000);
 }
 function updateQuestion(randomNumber) {
+    questionTimer.reset;
+    questionTimer.start;
+    console.log(questionTimer.time);
     currentQuestion = questions[randomNumber][0];
     answer[0] = questions[randomNumber][1];
     answer[1] = questions[randomNumber][2];
     answer[2] = questions[randomNumber][3];
     answer[3] = questions[randomNumber][4];
-    console.log("currentQuestion: " + currentQuestion);
-    console.log("answer[0]: " + answer[0]);
-    console.log("answer[1]: " + answer[1]);
-    console.log("answer[2]: " + answer[2]);
-    console.log("answer[3]: " + answer[3]);
+    // console.log("currentQuestion: " + currentQuestion);
+    // console.log("answer[0]: " + answer[0]);
+    // console.log("answer[1]: " + answer[1]);
+    // console.log("answer[2]: " + answer[2]);
+    // console.log("answer[3]: " + answer[3]);
     $("#question").text(currentQuestion);
     $("#answer0").html(answer[0]);
     $("#answer1").html(answer[1]);
@@ -96,11 +117,10 @@ function updateQuestion(randomNumber) {
     $("#answer3").html(answer[3]);
 }
 
-function initializeQuestions() {
+function initializeQuestions() { //ensures each of 5 questions in a trivia quiz is unique
     questionsPresented = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 10; i++) {
         randomNumber = Math.floor(Math.random() * questions.length);
-        isQuestionAnswered = false;
         if (questionsPresented.indexOf(randomNumber) !== -1) {
             --i;
         } else {
@@ -112,24 +132,23 @@ function initializeQuestions() {
 }
 
 function initialize() {
+    unansweredQuestions = 0;
     questionNumber = 0;
     correctAnswers = 0;
     wrongAnswers = 0;
-    $("#start").on("click", function () {
-        $(this).hide();
-        questionNumber = 0;
-        questionsPresented = initializeQuestions();
-        for (var i = 0; i < questionsPresented.length; i++) {
-            correctIndex[i] = questions[questionsPresented[i]][5];
-        }
-        updateQuestion(questionsPresented[questionNumber]);
-        $("#timer").html("20 seconds left");
-        timer.reset;
-        timer.start;
-    });
+
 }
 
-initialize();
+$("#start").on("click", function () {
+    $(this).hide();
+    initialize();
+    $("#timer").show();
+    questionsPresented = initializeQuestions();
+    for (var i = 0; i < questionsPresented.length; i++) {
+        correctIndex[i] = questions[questionsPresented[i]][5];
+    }
+    updateQuestion(questionsPresented[questionNumber]);
+});
 
 $(".answer").on("click", function () {
     if (this.id === "answer0") {
@@ -141,35 +160,54 @@ $(".answer").on("click", function () {
     } else if (this.id === "answer3") {
         answerSubmitted = 3;
     }
+
     if (answerSubmitted === 0 && correctIndex[questionNumber] === 0) {
-        alert("Correct!");
+        $("#question").html("");
+        $("#answer0").html("Correct!");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 1 && correctIndex[questionNumber] === 1) {
-        alert("Correct!");
+        $("#question").html("");
+        $("#answer0").html("Correct!");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 2 && correctIndex[questionNumber] === 2) {
-        alert("Correct!");
+        $("#question").html("");
+        $("#answer0").html("Correct!");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 3 && correctIndex[questionNumber] === 3) {
-        alert("Correct!");
+        $("#question").html("");
+        $("#answer0").html("Correct!");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
         correctAnswers++;
     } else {
-        alert("Wrong!");
+        $("#question").html("");
+        $("#answer0").html("Wrong!");
+        $("#answer1").html("");
+        $("#answer2").html("");
+        $("#answer3").html("");
         wrongAnswers++;
     }
-    $("#question").html("");
-    $("#answer0").html("");
-    $("#answer1").html("");
-    $("#answer2").html("");
-    $("#answer3").html("");
+    console.log(questionTimer.time);
     questionNumber++;
     if (questionNumber < questionsPresented.length) {
-        updateQuestion(questionsPresented[questionNumber]);
-        timer.reset;
+        setTimeout(function () {
+            updateQuestion(questionsPresented[questionNumber]);
+        }, 3000);
     } else {
-        displayTotals();
-        initialize();
+        setTimeout(function () {
+            displayTotals();
+            initialize();
+        }, 3000);
     }
 });
-
 
