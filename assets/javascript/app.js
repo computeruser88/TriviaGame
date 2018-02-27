@@ -34,29 +34,14 @@ var timerRunning = false;
 
 var questionTimer = {
     time: 15,
-    start: function () {
-        // if (timerRunning === false) {
-            // timerRunning = true;
-            intervalId = setInterval(questionTimer.count, 1000);
-            console.log(intervalId);
-        // }
-    },
-    stop: function () {
-        clearInterval(intervalId);
-        timerRunning = false;
-    },
-    reset: function () {
-        this.time = 15;
-        $(".timer").html("0:" + this.time);
-    },
     count: function () {
-        questionTimer.time--;
-        if (questionTimer.time < 10) {
-            displaySeconds = "0" + questionTimer.time;
+        this.time -= 0.1;
+        if (this.time < 10) {
+            displaySeconds = "0" + this.time;
         } else {
-            displaySeconds = questionTimer.time;
+            displaySeconds = this.time;
         }
-        if (questionTimer.time >= 0) {
+        if (this.time >= 0) {
             $("#timer").html("0:" + displaySeconds);
             console.log("displaySeconds: " + displaySeconds);
         } else {
@@ -78,6 +63,21 @@ var questionTimer = {
                 }, 3000);
             }
         }
+    },
+    start: function () {
+        if (timerRunning === false) {
+            timerRunning = true;
+            intervalId = setInterval(this.count, 100);
+            console.log(this.time);
+        }
+        console.log(this.time);
+    },
+    stop: function () {
+        clearInterval(intervalId);
+        timerRunning = false;
+    },
+    reset: function () {
+        this.time = 15;
     }
 };
 
