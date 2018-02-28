@@ -46,6 +46,7 @@ var questionTimer = {
             console.log("displaySeconds: " + displaySeconds);
         } else {
             questionNumber++;
+            $("#timer").html("");
             $("#question").html("");
             $("#answer0").html("You ran out of time.");
             $("#answer1").html("");
@@ -120,7 +121,7 @@ function updateQuestion(randomNumber) {
 
 function initializeQuestions() { //ensures each of 5 questions in a trivia quiz is unique
     questionsPresented = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 8; i++) {
         randomNumber = Math.floor(Math.random() * questions.length);
         if (questionsPresented.indexOf(randomNumber) !== -1) {
             --i;
