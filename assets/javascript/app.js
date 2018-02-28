@@ -90,7 +90,13 @@ function displayTotalsAndRestart() {
     $(".timer").hide();
     $("#answer0").html("You got " + correctAnswers + " correct.");
     $("#answer1").html("You got " + wrongAnswers + " wrong.");
-    $("#answer2").html("You did not answer " + unansweredQuestions + ".");
+    if (unansweredQuestions === 1) {
+        $("#answer2").html("You did not answer " + unansweredQuestions + " question.");
+    } else if (unansweredQuestions !== 0 ){
+        $("#answer2").html("You did not answer " + unansweredQuestions + " questions.");
+    } else {
+        $("#answer2").html("You answered all questions.");
+    }
     setTimeout(function () {
         $("#start").show();
         $("#question").html("");
