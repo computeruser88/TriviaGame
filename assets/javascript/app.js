@@ -29,19 +29,19 @@ var randomNumber;
 var questionNumber = 0;
 var answerSubmitted;
 var intervalId;
-var displaySeconds;
+var displaySeconds = "";
 var timerRunning = false;
 
 var questionTimer = {
     time: 15,
     count: function () {
-        this.time -= 0.1;
-        if (this.time < 10) {
-            displaySeconds = "0" + this.time;
+        questionTimer.time--;
+        if (questionTimer.time < 10) {
+            displaySeconds = "0" + questionTimer.time;
         } else {
-            displaySeconds = this.time;
+            displaySeconds = questionTimer.time;
         }
-        if (this.time >= 0) {
+        if (questionTimer.time >= 0) {
             $("#timer").html("0:" + displaySeconds);
             console.log("displaySeconds: " + displaySeconds);
         } else {
@@ -67,13 +67,14 @@ var questionTimer = {
     start: function () {
         if (timerRunning === false) {
             timerRunning = true;
-            intervalId = setInterval(this.count, 100);
+            intervalId = setInterval(this.count, 1000);
             console.log(this.time);
         }
         console.log(this.time);
     },
     stop: function () {
         clearInterval(intervalId);
+        $("#timer").html("");
         timerRunning = false;
     },
     reset: function () {
@@ -82,7 +83,7 @@ var questionTimer = {
 };
 
 function displayTotals() {
-    questionTimer.stop;
+    questionTimer.stop();
     $(".timer").hide();
     $("#answer0").html("You got " + correctAnswers + " correct.");
     $("#answer1").html("You got " + wrongAnswers + " wrong.");
@@ -97,8 +98,8 @@ function displayTotals() {
     }, 6000);
 }
 function updateQuestion(randomNumber) {
-    questionTimer.reset;
-    questionTimer.start;
+    questionTimer.reset();
+    questionTimer.start();
     console.log(questionTimer.time);
     currentQuestion = questions[randomNumber][0];
     answer[0] = questions[randomNumber][1];
@@ -162,6 +163,7 @@ $(".answer").on("click", function () {
     }
 
     if (answerSubmitted === 0 && correctIndex[questionNumber] === 0) {
+        questionTimer.stop();
         $("#question").html("");
         $("#answer0").html("Correct!");
         $("#answer1").html("");
@@ -169,6 +171,7 @@ $(".answer").on("click", function () {
         $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 1 && correctIndex[questionNumber] === 1) {
+        questionTimer.stop();
         $("#question").html("");
         $("#answer0").html("Correct!");
         $("#answer1").html("");
@@ -176,6 +179,7 @@ $(".answer").on("click", function () {
         $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 2 && correctIndex[questionNumber] === 2) {
+        questionTimer.stop(); 
         $("#question").html("");
         $("#answer0").html("Correct!");
         $("#answer1").html("");
@@ -183,6 +187,7 @@ $(".answer").on("click", function () {
         $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 3 && correctIndex[questionNumber] === 3) {
+        questionTimer.stop();
         $("#question").html("");
         $("#answer0").html("Correct!");
         $("#answer1").html("");
@@ -190,6 +195,7 @@ $(".answer").on("click", function () {
         $("#answer3").html("");
         correctAnswers++;
     } else {
+        questionTimer.stop();
         $("#question").html("");
         $("#answer0").html("Wrong!");
         $("#answer1").html("");
