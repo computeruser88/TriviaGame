@@ -105,7 +105,7 @@ function displayTotalsAndRestart() {
         $("#answer1").html("");
         $("#answer2").html("");
         $("#answer3").html("");
-    }, 6000);
+    }, 7000);
 }
 function updateQuestion(randomNumber) {
     questionTimer.start();
