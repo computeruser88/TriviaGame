@@ -19,7 +19,7 @@ var questions = [
 ]
 
 var unansweredQuestions = 0;
-var questionsPresented = []; // ensures 5 unique questions per game
+var questionsPresented = []; // ensures 6 unique questions per game
 var correctAnswers = 0;
 var wrongAnswers = 0;
 var answer = [];
@@ -53,16 +53,18 @@ var questionTimer = {
             $("#answer2").html("");
             $("#answer3").html("");
             unansweredQuestions++;
-            if (questionNumber < questionsPresented.length) {
-                setTimeout(function () {
+            questionTimer.time = 18;
+            console.log("unansweredQuestions: " + unansweredQuestions);
+            setTimeout(function () {
+                if (questionNumber < questionsPresented.length) {
+                    questionTimer.start;
+                    $("#timer").show();
+                    console.log(questionsPresented[questionNumber]);
                     updateQuestion(questionsPresented[questionNumber]);
-                }, 3000);
-            } else {
-                setTimeout(function () {
-                    displayTotals();
-                    initialize();
-                }, 3000);
-            }
+                } else if (questionNumber === questionsPresented.length) {
+                    displayTotalsAndRestart();
+                }
+            }, 3000);
         }
     },
     start: function () {
@@ -83,7 +85,7 @@ var questionTimer = {
     }
 };
 
-function displayTotals() {
+function displayTotalsAndRestart() {
     questionTimer.stop();
     $(".timer").hide();
     $("#answer0").html("You got " + correctAnswers + " correct.");
@@ -99,7 +101,6 @@ function displayTotals() {
     }, 6000);
 }
 function updateQuestion(randomNumber) {
-    questionTimer.reset();
     questionTimer.start();
     console.log(questionTimer.time);
     currentQuestion = questions[randomNumber][0];
@@ -138,17 +139,17 @@ function initialize() {
     questionNumber = 0;
     correctAnswers = 0;
     wrongAnswers = 0;
-
+    return initializeQuestions();
 }
 
 $("#start").on("click", function () {
     $(this).hide();
-    initialize();
     $("#timer").show();
-    questionsPresented = initializeQuestions();
+    questionsPresented = initialize();
     for (var i = 0; i < questionsPresented.length; i++) {
         correctIndex[i] = questions[questionsPresented[i]][5];
     }
+    questionTimer.reset();
     updateQuestion(questionsPresented[questionNumber]);
 });
 
@@ -180,7 +181,7 @@ $(".answer").on("click", function () {
         $("#answer3").html("");
         correctAnswers++;
     } else if (answerSubmitted === 2 && correctIndex[questionNumber] === 2) {
-        questionTimer.stop(); 
+        questionTimer.stop();
         $("#question").html("");
         $("#answer0").html("Correct!");
         $("#answer1").html("");
@@ -208,12 +209,12 @@ $(".answer").on("click", function () {
     questionNumber++;
     if (questionNumber < questionsPresented.length) {
         setTimeout(function () {
+            questionTimer.reset();
             updateQuestion(questionsPresented[questionNumber]);
         }, 3000);
     } else {
         setTimeout(function () {
-            displayTotals();
-            initialize();
+            displayTotalsAndRestart();
         }, 3000);
     }
 });
