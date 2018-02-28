@@ -46,7 +46,7 @@ var questionTimer = {
             console.log("displaySeconds: " + displaySeconds);
         } else {
             questionNumber++;
-            $("#timer").html("");
+            $("#timer").hide();
             $("#question").html("");
             $("#answer0").html("You ran out of time.");
             $("#answer1").html("");
