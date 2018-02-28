@@ -59,6 +59,7 @@ var questionTimer = {
                 if (questionNumber < questionsPresented.length) {
                     questionTimer.start;
                     $("#timer").show();
+                    $("#timer").html("0:15");
                     console.log(questionsPresented[questionNumber]);
                     updateQuestion(questionsPresented[questionNumber]);
                 } else if (questionNumber === questionsPresented.length) {
@@ -217,6 +218,7 @@ $(".answer").on("click", function () {
     if (questionNumber < questionsPresented.length) {
         setTimeout(function () {
             questionTimer.reset();
+            $("#timer").html("0:15");
             updateQuestion(questionsPresented[questionNumber]);
         }, 3000);
     } else {
