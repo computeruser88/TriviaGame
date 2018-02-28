@@ -90,7 +90,7 @@ function displayTotalsAndRestart() {
     $(".timer").hide();
     $("#answer0").html("You got " + correctAnswers + " correct.");
     $("#answer1").html("You got " + wrongAnswers + " wrong.");
-    $("#answer2").html("You did not answer " + unansweredQuestions + " questions.");
+    $("#answer2").html("You did not answer " + unansweredQuestions + ".");
     setTimeout(function () {
         $("#start").show();
         $("#question").html("");
