@@ -145,6 +145,7 @@ function initialize() {
 $("#start").on("click", function () {
     $(this).hide();
     $("#timer").show();
+    $("#timer").html("0:15");
     questionsPresented = initialize();
     for (var i = 0; i < questionsPresented.length; i++) {
         correctIndex[i] = questions[questionsPresented[i]][5];
