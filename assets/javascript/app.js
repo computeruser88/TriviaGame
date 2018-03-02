@@ -127,7 +127,7 @@ function updateQuestion(randomNumber) {
     $("#answer3").html(answer[3]);
 }
 
-function initializeQuestions() { // ensures each of 5 questions in a trivia quiz is unique
+function initializeQuestions() { // ensures each question in a trivia quiz is unique
     questionsPresented = [];
     for (var i = 0; i < 6; i++) { // 6 questions per game
         randomNumber = Math.floor(Math.random() * questions.length);
